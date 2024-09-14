@@ -1,0 +1,17 @@
+Understanding the diffs between RestTemplate and WebClient
+https://www.baeldung.com/spring-webclient-resttemplate
+Interesting thread in kotlin discussions:
+https://discuss.kotlinlang.org/t/coroutines-that-call-functions-with-blocking-code/27478
+
+RestTemplate - a synchronous REST client performing HTTP requests using a simple template-style API.
+It uses JDK HttpURLConnection and Apache HttpComponents under the hood. We can get RestTemplate class
+from spring-web dependency
+FeignClient - is a another REST client that makes writing web clients easier. When we using the Feign,
+we have to define only the interfaces and annotate them accordingly. The actual web client implementation
+is then provided by Spring at runtime. Behind the scenes, the @FeignClient makes a synchronous HTTP
+requests and it is based on thread-per-request architectural decision and design
+
+WebClient - is asynchronous and non blocking REST invoker which is the opposite of RestTemplate
+and FeignClient. It executes the HTTP request and adds a “waiting for response” task into a queue.
+Later, the “waiting for response” task is executed from the queue after the response is received,
+finally delivering the response to the subscriber function. So there is no more threads in waiting state.
